@@ -1,0 +1,53 @@
+@import "_variables.scss";
+
+// $color-main-bg: #fffadf;
+// $color-main-sub: #8f9435;
+// $color-main-text: #5f9435;
+// $color-main-bg-d: #1f192b;
+// $color-main-sub-d: #4e706a;
+// $color-main-text-d: #eec7bb;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: $color-main-bg;
+  color: $color-main-text;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+p {
+  cursor: default;
+}
+
+.main {
+  min-height: 100vh;
+  padding: 2rem 0 2rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  height: calc(100vh - 178px);
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    background-color: $color-main-bg-d;
+    color: $color-main-text-d;
+  }
+}

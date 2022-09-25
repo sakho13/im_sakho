@@ -1,0 +1,170 @@
+@import "_variables.scss";
+
+.container {
+  height: 100%;
+  overflow-y: scroll;
+  text-align: center;
+  width: 100%;
+}
+
+.container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.container::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background: rgb(226, 226, 226, 1);
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: #5a5a5a;
+  border-radius: 5px;
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading_main>label {
+  color: $color-main-text;
+}
+
+.loading_main>span>i {
+  background-color: $color-main-text;
+}
+
+.title_part {
+  margin: 0;
+  margin-bottom: 10px;
+  position: relative;
+  line-height: 1.4;
+  padding: 0.25em 1em;
+  display: inline-block;
+}
+
+.title_part:after, .title_part:before {
+  content: '';
+  width: 20px;
+  height: 30px;
+  position: absolute;
+  display: inline-block;
+}
+
+.title_part:before {
+  border-left: solid 1px $color-main-text;
+  border-top: solid 1px $color-main-text;
+  top: 0;
+  left: 0;
+}
+
+.title_part:after {
+  border-right: solid 1px $color-main-text;
+  border-bottom: solid 1px $color-main-text;
+  bottom: 0;
+  right: 0;
+}
+
+.date_part {
+  width: 100%;
+  margin: 0;
+  font-size: 15px;
+}
+
+.genre_part {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.genre_part>p {
+  background: $color-main-marker;
+  color: $color-main-bg;
+  padding: 0.4em;
+  border-radius: 0.4em;
+  margin: 7px 10px;
+  transform: rotate(-1deg);
+  width: fit-content;
+  font-weight: 600;
+}
+
+.genre_part>p:before  {
+  content: '●';
+  color: $color-main-bg;
+  margin-right: 8px;
+}
+
+.content_part {
+  display: flex;
+  justify-content: center;
+}
+
+.divider {
+  border-width: 1px;
+  border-style: dashed;
+  width: 40%;
+  border-color: $color-main-text;
+}
+
+.link_part {
+  text-decoration: underline;
+  color: #67a2d1;
+  margin: 0 4px;
+}
+
+// リスト系のテキストを左寄せ
+.taLeft {
+  text-align: left;
+}
+
+.link_part:hover {
+  color: #34658c;
+}
+
+@media (prefers-color-scheme: dark) {
+  .container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 1);
+  }
+
+  .container::-webkit-scrollbar-thumb {
+    background: #1d1d1d;
+  }
+
+  .loading_main>label {
+    color: $color-main-text-d;
+  }
+
+  .loading_main>span>i {
+    background-color: $color-main-text-d;
+  }
+
+  .title_part:before {
+    border-left: solid 1px $color-main-text-d;
+    border-top: solid 1px $color-main-text-d;
+  }
+
+  .title_part:after {
+    border-right: solid 1px $color-main-text-d;
+    border-bottom: solid 1px $color-main-text-d;
+  }
+
+  .genre_part>p {
+    background-color: $color-main-marker-d;
+    color: $color-main-bg-d;
+  }
+
+  .genre_part>p:before {
+    content: '●';
+    color: $color-main-bg-d;
+    margin-right: 8px;
+  }
+
+  .divider {
+    border-color: $color-main-text-d;
+  }
+}
