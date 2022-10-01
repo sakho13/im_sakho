@@ -1,5 +1,5 @@
-import { Button } from "@nextui-org/react";
 import { NextPage } from "next";
+import styles from "../styles/link_buttons.module.scss"
 
 const LinkButtons: NextPage = () => {
   const newTab = (url: string) => {
@@ -7,24 +7,22 @@ const LinkButtons: NextPage = () => {
   }
 
   return (
-    <Button.Group>
-      <Button
-        auto
-        ghost
-        flat
+    <div className={styles.container}>
+      <button
+        className={styles.button55}
         onClick={() => newTab("https://github.com/sakho13")}
       >
         GitHub
-      </Button>
-      <Button
-        auto
-        ghost
-        flat
-        onClick={() => newTab("https://www.youtube.com/channel/UCfIemfzMpKiNJHjYatg7MXg")}
+      </button>
+      <button
+        className={styles.button55}
+        onClick={() =>
+          newTab("https://www.youtube.com/channel/UCfIemfzMpKiNJHjYatg7MXg")
+        }
       >
         YouTube
-      </Button>
-    </Button.Group>
+      </button>
+    </div>
   )
 }
 
