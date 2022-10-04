@@ -12,7 +12,7 @@ import { CommonBaseOutput } from "../api_output_types"
 
 export type GetPostOutput = CommonBaseOutput<{
   postInfo: PageObjectResponse | PartialPageObjectResponse | null
-  contents: Content[]
+  html: string
 }>
 
 export default async function handler(
@@ -27,7 +27,7 @@ export default async function handler(
         success: true,
         result: {
           postInfo: null,
-          contents: [],
+          html: "",
         },
       })
     }
@@ -41,95 +41,38 @@ export default async function handler(
 
     const postInfo = post[1] as BlockObjectResponse[]
 
-    const contents: Content[] = []
-
     const id = post[0]?.id.split("-").join("")
+    if (id === undefined) {
+      return res.status(200).json({
+        success: false,
+      })
+    }
     const { title, icon, cover, html } = await NotionPageToHtml.convert(
       `https://www.notion.so/${id}`,
+      {
+        excludeCSS: true,
+      },
     )
-    console.log(title)
+    // console.log(title)
     // console.log(html)
-    const hSliced = html.slice(html.indexOf("<style>"))
+    const hSliced1 = html
+      .split("</html>")[0]
+      .split("<html>")[1]
+      // .split("</head>")[1]
+      .replace("<header>", "<!-- <header>")
+      .replace("</header>", "</header> -->")
+      .replace("<script>\nMathJax", "<!--<script>\nMathJax")
+      .replace('/es5/tex-chtml.js">\n</script>', '/es5/tex-chtml.js">\n</script>-->')
+      // .replaceAll("\n", "")
+
+    const hSliced = hSliced1
     console.log(hSliced)
-
-    for (const pi of postInfo) {
-      // console.log(pi)
-      const c = await convertType2Tag(notion, pi)
-
-      if (pi.type === "bulleted_list_item") {
-        const latestContent = contents[contents.length - 1]
-
-        if (latestContent.type === 'b_list' && c.type === "b_list") {
-          if (c.values.value.some((v) => Array.isArray(v))) {
-            latestContent.values.value.push(c.values.value[0])
-          } else {
-            // console.log(">", latestContent.values.value)
-            // console.log(">", c.values.value[0])
-          }
-        } else {
-          contents.push(c)
-        }
-        continue
-      }
-
-      if (pi.type === "numbered_list_item") {
-        const latestContent = contents[contents.length - 1]
-
-        if (latestContent.type === "n_list" && c.type === "n_list") {
-          if (c.values.value.some((v) => Array.isArray(v))) {
-            latestContent.values.value.push(c.values.value[0])
-          } else {
-            console.log(">", latestContent.values.value)
-            console.log(">", c.values.value[0])
-          }
-        } else {
-          contents.push(c)
-        }
-        continue
-      }
-
-      // if (
-      //   pi.type === "numbered_list_item" ||
-      //   pi.type === "bulleted_list_item" ||
-      //   pi.type === "to_do"
-      // ) {
-      //   const latestContent = contents[contents.length - 1]
-      //   if (
-      //     latestContent.type === "n_list" &&
-      //     pi.type === "numbered_list_item" &&
-      //     c.type === "n_list"
-      //   ) {
-      //     // 同階層についか
-      //     latestContent.values.value = latestContent.values.value.concat(
-      //       c.values,
-      //     )
-      //     continue
-      //   } else if (
-      //     latestContent.type === "b_list" &&
-      //     pi.type === "bulleted_list_item" &&
-      //     c.type === "b_list"
-      //   ) {
-      //     // 同階層についか
-      //     latestContent.values.value = latestContent.values.value.concat(
-      //       c.values,
-      //     )
-      //     continue
-      //   } else {
-      //     contents.push(c)
-      //     continue
-      //   }
-      // } else {
-      //   contents.push(c)
-      //   continue
-      // }
-      contents.push(c)
-    }
 
     return res.status(200).json({
       success: true,
       result: {
         postInfo: post[0],
-        contents: contents,
+        html: hSliced,
       },
     })
   } else {
