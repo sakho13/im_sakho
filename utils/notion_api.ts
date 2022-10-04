@@ -35,6 +35,12 @@ export class NotionApi {
               is_not_empty: true,
             },
           },
+          // {
+          //   property: "Test",
+          //   checkbox: {
+          //     equals: true,
+          //   },
+          // },
         ],
       },
       sorts: [
@@ -45,7 +51,7 @@ export class NotionApi {
       ],
       start_cursor: nextCursor === null ? undefined : nextCursor,
       page_size: 2,
-    });
+    })
     return res;
   }
 
@@ -74,10 +80,16 @@ export class NotionApi {
               equals: slug,
             },
           },
+          // {
+          //   property: "Test",
+          //   checkbox: {
+          //     equals: true,
+          //   },
+          // },
         ],
       },
       page_size: 1,
-    });
+    })
 
 
     if (res1.results.length === 1 && 'url' in res1.results[0]) {
