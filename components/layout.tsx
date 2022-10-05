@@ -3,9 +3,9 @@ import { ReactElement } from "react"
 // import Footer from "./footer"
 import Navbar from "./navbar"
 
-type LayoutProps = Required<{
-  readonly children: ReactElement
-}>
+type LayoutProps = {
+  readonly children: ReactElement[]
+}
 
 export default function Layout({ children }: LayoutProps) {
   // console.log("lay", children)
