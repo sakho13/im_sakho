@@ -1,8 +1,19 @@
+@import "_variables.scss";
+
 .main {
   padding: 2rem 0 2rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: calc(100vh - 178px);
+  // height: calc(100vh - 178px);
+  background-color: $color-main-bg;
+  color: $color-main-text;
+}
+
+@media (prefers-color-scheme: dark) {
+  .main {
+    background-color: $color-main-bg-d;
+    color: $color-main-text-d;
+  }
 }

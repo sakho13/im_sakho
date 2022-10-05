@@ -1,12 +1,13 @@
 import type { NextPage } from "next"
 import { useEffect, useState } from "react"
 import axios from "axios"
-import { Button, Card, Grid, Loading } from "@nextui-org/react"
+import { Button, Grid, Loading } from "@nextui-org/react"
 import Image from "next/image"
 import { GetPostsOutput } from "../pages/api/get_posts"
 import { PostType } from "../pages/api/api_output_types"
 import styles from "../styles/post_list.module.scss"
 import { useRouter } from "next/router"
+import Genrebar from "./genrebar"
 
 const PostList: NextPage = () => {
   const [nextPost, setNextPost] = useState<string>("")
@@ -61,74 +62,42 @@ const PostList: NextPage = () => {
           </Loading>
         </div>
       ) : (
-        <Grid.Container css={{ width: "100%" }} gap={2} justify="center">
+        <div className={styles.post_container}>
           {posts.map((post) => (
-            <Grid key={post.id} md={5.5} xs={10} justify="center">
-              <Card
-                variant="flat"
-                css={{
-                  height: "300px",
-                  width: "300px",
-                  "background-color": "#ede3ce",
-                }}
-              >
-                <Card.Header>
-                  {post.icon === null ? (
-                    <p className={styles.icon}>{"📄"}</p>
-                  ) : !post.icon.isUrl ? (
-                    <p className={styles.icon}>{post.icon.icon}</p>
-                  ) : (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      className={styles.svg_icon}
-                      src={post.icon.icon}
-                      alt="icon"
-                    />
-                  )}
+            <div
+              className={styles.post_cell}
+              onClick={(e) => {
+                redirectPostTo(post.slug)
+              }}
+            >
+              <div className={styles.post_cell_icon}>
+                {/* アイコン */}
+                {post.icon === null ? (
+                  <p className={styles.icon}>{"📄"}</p>
+                ) : !post.icon.isUrl ? (
+                  <p className={styles.icon}>{post.icon.icon}</p>
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    className={styles.svg_icon}
+                    src={post.icon.icon}
+                    alt="icon"
+                  />
+                )}
+              </div>
 
-                  <Grid.Container>
-                    <Grid xs={12} justify="flex-start">
-                      <p className={styles.post_title}>{post.title}</p>
-                    </Grid>
-                    <Grid xs={12}>
-                      作成日: {formatDateTime(post.created_at)}
-                    </Grid>
-                  </Grid.Container>
-                </Card.Header>
-
-                <Card.Divider />
-
-                <Card.Body>
-                  <p style={{ margin: 0, fontWeight: "bold" }}>ジャンル</p>
-                  <p>
-                    {post.genres.map((genre, i) => {
-                      return (
-                        <span key={i} className={styles.genre_part}>
-                          {genre.name}
-                        </span>
-                      )
-                    })}
-                  </p>
-                </Card.Body>
-
-                <Card.Divider />
-
-                <Card.Footer>
-                  <div className={styles.card_link_container}>
-                    <p
-                      onClick={(e) => {
-                        redirectPostTo(post.slug)
-                      }}
-                      className={styles.card_link}
-                    >
-                      To →
-                    </p>
-                  </div>
-                </Card.Footer>
-              </Card>
-            </Grid>
+              <div className={styles.post_cell_body}>
+                <p className={styles.post_cell_title}>{post.title}</p>
+                <p className={styles.post_cell_date}>
+                  作成日: {formatDateTime(post.created_at)}
+                </p>
+                <div className={styles.post_cell_genres}>
+                  <Genrebar genres={post.genres} />
+                </div>
+              </div>
+            </div>
           ))}
-        </Grid.Container>
+        </div>
       )}
       {nextPost === "" ? (
         <></>

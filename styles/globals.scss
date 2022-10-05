@@ -1,12 +1,5 @@
 @import "_variables.scss";
 
-// $color-main-bg: #fffadf;
-// $color-main-sub: #8f9435;
-// $color-main-text: #5f9435;
-// $color-main-bg-d: #1f192b;
-// $color-main-sub-d: #4e706a;
-// $color-main-text-d: #eec7bb;
-
 html,
 body {
   padding: 0;
@@ -15,6 +8,7 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background-color: $color-main-bg;
   color: $color-main-text;
+  height: 100vh;
 }
 
 a {
@@ -47,6 +41,10 @@ p {
     color-scheme: dark;
   }
   body {
+    background-color: $color-main-bg-d;
+    color: $color-main-text-d;
+  }
+  .main {
     background-color: $color-main-bg-d;
     color: $color-main-text-d;
   }

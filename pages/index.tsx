@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import styles from '../styles/Home.module.scss'
 import PostList from '../components/post_list'
 import AboutMe from '../components/about_me'
 import { Grid } from '@nextui-org/react'

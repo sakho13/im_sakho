@@ -2,7 +2,7 @@ import { Grid } from "@nextui-org/react"
 import type { NextPage } from "next"
 import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
-import styles from "../styles/about_me.module.scss"
+import styles from "./styles/about_me.module.scss"
 import LinkButtons from "./link_buttons"
 
 const AboutMe: NextPage = () => {

@@ -1,0 +1,42 @@
+@import "_variables.scss";
+
+.genre_part {
+  margin: 0 10px;
+  width: fit-content;
+  font-weight: 600;
+
+  align-self: center;
+  background-color: $color-main-marker;
+  background-image: none;
+  background-position: 0 90%;
+  background-repeat: repeat no-repeat;
+  background-size: 4px 3px;
+  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+  box-sizing: border-box;
+  color: $color-main-bg;
+  display: inline-block;
+  font-family: Neucha, sans-serif;
+  font-size: 1rem;
+  line-height: 23px;
+  outline: none;
+  padding: 5px 10px;
+  text-decoration: none;
+  transition: all 235ms ease-in-out;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+@media (prefers-color-scheme: dark) {
+  .genre_part {
+    background-color: $color-main-marker-d;
+    color: $color-main-bg-d;
+  }
+}

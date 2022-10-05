@@ -1,5 +1,5 @@
 import { RecoilRoot } from "recoil"
-import Footer from "./footer"
+// import Footer from "./footer"
 import Navbar from "./navbar"
 
 export default function Layout({ children }) {
