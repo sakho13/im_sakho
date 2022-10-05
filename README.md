@@ -6,3 +6,9 @@
   * TypeScript
 * Vercel
 * Notion
+
+## Deployment
+
+https://im-sakho-blog.vercel.app/
+
+Thanks for Vercel!
