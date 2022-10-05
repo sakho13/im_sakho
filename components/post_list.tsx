@@ -66,6 +66,7 @@ const PostList: NextPage = () => {
           {posts.map((post) => (
             <div
               className={styles.post_cell}
+              key={post.slug}
               onClick={(e) => {
                 redirectPostTo(post.slug)
               }}

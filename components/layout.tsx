@@ -1,8 +1,14 @@
 import { RecoilRoot } from "recoil"
+import { ReactElement } from "react"
 // import Footer from "./footer"
 import Navbar from "./navbar"
 
-export default function Layout({ children }) {
+type LayoutProps = Required<{
+  readonly children: ReactElement
+}>
+
+export default function Layout({ children }: LayoutProps) {
+  // console.log("lay", children)
   return (
     <RecoilRoot>
       <Navbar />
