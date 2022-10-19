@@ -1,8 +1,7 @@
-import type { NextPage } from "next"
+import type { NextPage, GetStaticPaths } from "next"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { Button, Grid, Loading } from "@nextui-org/react"
-import Image from "next/image"
 import { GetPostsOutput } from "../pages/api/get_posts"
 import { PostType } from "../pages/api/api_output_types"
 import styles from "../styles/post_list.module.scss"
@@ -120,5 +119,8 @@ const PostList: NextPage = () => {
     </div>
   )
 }
+
+// export async function getStaticPaths<GetStaticPaths>() {
+// }
 
 export default PostList

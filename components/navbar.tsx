@@ -18,22 +18,24 @@ const Navbar: NextPage = () => {
       case "Home":
         setPageName("Home")
         router.push("/")
-        break;
+        break
       case "AboutMe":
         setPageName("AboutMe")
         router.push("/about")
-        break;
+        break
       case "Posts":
         setPageName("Posts")
         router.push("/post")
-        break;
+        break
     }
   }
 
   return (
     <header className={styles.container}>
       <div className={styles.title}>
-        <h2><span className={styles.name}>さこ</span>です</h2>
+        <h2>
+          <span className={styles.name}>さこ</span>です
+        </h2>
       </div>
       <div className={styles.subtitle}>
         <p>作ったものまとめ</p>
@@ -42,19 +44,19 @@ const Navbar: NextPage = () => {
       <ul className={styles.nav_list}>
         <li
           onClick={() => changePage("Home")}
-          className={ currentPageName === "Home" ? styles.current : ""}
+          className={currentPageName === "Home" ? styles.current : ""}
         >
           Home
         </li>
         <li
           onClick={() => changePage("AboutMe")}
-          className={ currentPageName === "AboutMe" ? styles.current : ""}
+          className={currentPageName === "AboutMe" ? styles.current : ""}
         >
           AboutMe
         </li>
         <li
           onClick={() => changePage("Posts")}
-          className={ currentPageName === "Posts" ? styles.current : ""}
+          className={currentPageName === "Posts" ? styles.current : ""}
         >
           Posts
         </li>

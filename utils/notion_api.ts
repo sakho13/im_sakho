@@ -23,24 +23,24 @@ export class NotionApi {
       database_id: this.dbId,
       filter: {
         and: [
-          {
-            property: "Published",
-            checkbox: {
-              equals: true,
-            },
-          },
+          // {
+          //   property: "Published",
+          //   checkbox: {
+          //     equals: true,
+          //   },
+          // },
           {
             property: "Slug",
             rich_text: {
               is_not_empty: true,
             },
           },
-          // {
-          //   property: "Test",
-          //   checkbox: {
-          //     equals: true,
-          //   },
-          // },
+          {
+            property: "Test",
+            checkbox: {
+              equals: true,
+            },
+          },
         ],
       },
       sorts: [
@@ -68,24 +68,24 @@ export class NotionApi {
       database_id: this.dbId,
       filter: {
         and: [
-          {
-            property: "Published",
-            checkbox: {
-              equals: true,
-            },
-          },
+          // {
+          //   property: "Published",
+          //   checkbox: {
+          //     equals: true,
+          //   },
+          // },
           {
             property: "Slug",
             rich_text: {
               equals: slug,
             },
           },
-          // {
-          //   property: "Test",
-          //   checkbox: {
-          //     equals: true,
-          //   },
-          // },
+          {
+            property: "Test",
+            checkbox: {
+              equals: true,
+            },
+          },
         ],
       },
       page_size: 1,
