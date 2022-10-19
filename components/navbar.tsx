@@ -1,6 +1,7 @@
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
 import { useState } from "react"
+import { event } from "../lib/gtag"
 import styles from "../styles/navbar.module.scss"
 
 const Navbar: NextPage = () => {
@@ -14,6 +15,17 @@ const Navbar: NextPage = () => {
    * @param name
    */
   const changePage = (name: PageNames) => {
+    try {
+      event({
+        action: "jump_page_nav",
+        category: "Action",
+        label: "Nav",
+        value: name,
+      })
+    } catch (err) {
+      // console.warn(err)
+    }
+
     switch (name) {
       case "Home":
         setPageName("Home")

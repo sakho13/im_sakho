@@ -34,8 +34,8 @@ export const event = ({
   label,
   value = "",
 }: {
-  action: any
-  category: any
+  action: string
+  category: string
   label: any
   value: string
 }) => {
