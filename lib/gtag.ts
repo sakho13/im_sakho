@@ -37,15 +37,19 @@ export const event = ({
   action: string
   category: string
   label: any
-  value: string
+  value: any
 }) => {
   if (!existsGaId || !window || !window.gtag) {
     return
   }
 
-  window.gtag("event", action, {
-    event_category: category,
-    event_label: label,
-    value,
-  })
+  try {
+    window.gtag("event", action, {
+      event_category: category,
+      event_label: label,
+      value,
+    })
+  } catch (err) {
+    console.warn(err)
+  }
 }
