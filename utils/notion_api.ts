@@ -53,7 +53,7 @@ export class NotionApi {
         },
       ],
       start_cursor: nextCursor === null ? undefined : nextCursor,
-      page_size: 2,
+      page_size: 20,
     })
     return res
   }
