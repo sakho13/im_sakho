@@ -89,7 +89,11 @@ const PostList: NextPage = () => {
               <div className={styles.post_cell_body}>
                 <p className={styles.post_cell_title}>{post.title}</p>
                 <p className={styles.post_cell_date}>
-                  作成日: {formatDateTime(post.created_at)}
+                  <span>作成日: {formatDateTime(post.created_at)}</span>
+                  <span className={styles.post_cell_date_space}>
+                    &nbsp;/&nbsp;
+                  </span>
+                  <span>最終更新日: {formatDateTime(post.last_edited_at)}</span>
                 </p>
                 <div className={styles.post_cell_genres}>
                   <Genrebar genres={post.genres} />
