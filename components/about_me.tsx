@@ -15,7 +15,7 @@ const AboutMe: NextPage = () => {
       <Grid.Container justify="center" direction="row" alignItems="center">
         <Grid xs={12} md={6} justify="center">
           <Image
-            src='/my_icon.jpeg'
+            src='/my_icon.png'
             alt="my_icon"
             className={styles.img_cover}
             objectFit="cover"
