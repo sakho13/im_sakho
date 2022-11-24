@@ -1,12 +1,16 @@
-import { Loading, Modal } from "@nextui-org/react"
+import { Loading } from "@nextui-org/react"
 import axios from "axios"
-import type { NextPage } from "next"
+import type { NextPage, GetStaticPaths } from "next"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Genrebar from "../../components/genrebar"
 import styles from "../../styles/post_detail.module.scss"
 import { PostGenreType } from "../api/api_output_types"
 import { GetPostOutput } from "../api/get_post"
+
+type Params = {
+  id: string
+}
 
 const PostDetail: NextPage = () => {
   const router = useRouter()
@@ -106,6 +110,24 @@ const PostDetail: NextPage = () => {
       )}
     </div>
   )
+}
+
+export const getStaticPaths: GetStaticPaths<Params> = async () => {
+  const ids = [
+    "i_started_this",
+    "created_gd_rap",
+    "i_read_rongo_to_soroban_2022",
+    "report_sakhool_1",
+  ]
+
+  return {
+    paths: ids.map((id) => {
+      return {
+        params: {id: id}
+      }
+    }),
+    fallback: false,
+  }
 }
 
 export default PostDetail
