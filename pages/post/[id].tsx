@@ -1,6 +1,6 @@
 import { Loading } from "@nextui-org/react"
 import axios from "axios"
-import type { NextPage, GetStaticPaths } from "next"
+import type { NextPage, GetStaticPaths, GetStaticProps, GetStaticPropsResult } from "next"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Genrebar from "../../components/genrebar"
@@ -112,22 +112,27 @@ const PostDetail: NextPage = () => {
   )
 }
 
-export const getStaticPaths: GetStaticPaths<Params> = async () => {
-  const ids = [
-    "i_started_this",
-    "created_gd_rap",
-    "i_read_rongo_to_soroban_2022",
-    "report_sakhool_1",
-  ]
+// export const getStaticPaths: GetStaticPaths<Params> = async () => {
+//   const ids = [
+//     "i_started_this",
+//     "created_gd_rap",
+//     "i_read_rongo_to_soroban_2022",
+//     "report_sakhool_1",
+//   ]
 
-  return {
-    paths: ids.map((id) => {
-      return {
-        params: {id: id}
-      }
-    }),
-    fallback: false,
-  }
-}
+//   return {
+//     paths: ids.map((id) => {
+//       return {
+//         params: {id: id}
+//       }
+//     }),
+//     fallback: false,
+//   }
+// }
+
+// export const getStaticProps: GetStaticProps<{}> = (context) => {
+//   // context.params
+//   return {} as GetStaticPropsResult<{}>
+// }
 
 export default PostDetail
