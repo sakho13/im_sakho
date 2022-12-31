@@ -1,65 +1,25 @@
-import { Loading } from "@nextui-org/react"
-import axios from "axios"
-import type { NextPage, GetStaticPaths, GetStaticProps, GetStaticPropsResult } from "next"
+import type { NextPage, GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
 import Genrebar from "../../components/genrebar"
+import { PostController } from "../../lib/post/PostController"
 import styles from "../../styles/post_detail.module.scss"
 import { PostGenreType } from "../api/api_output_types"
-import { GetPostOutput } from "../api/get_post"
-
-type Params = {
-  id: string
+export type PostDetailType = {
+  title: string
+  genres: PostGenreType[]
+  createdAt: string
+  lastUpdatedAt: string
+  html: string
 }
 
-const PostDetail: NextPage = () => {
+const PostDetail: NextPage<PostDetailType> = ({
+  title,
+  genres,
+  createdAt,
+  lastUpdatedAt,
+  html,
+}: PostDetailType) => {
   const router = useRouter()
-  const [loading, setLoading] = useState(true)
-
-  const [title, setTitle] = useState<string>("unknown")
-  const [genres, setGenres] = useState<PostGenreType[]>([])
-  const [createdAt, setCreatedAt] = useState<string>("")
-  const [lastUpdatedAt, setLastUpdatedAt] = useState<string>("")
-  const [html, setHtml] = useState<string | null>(null)
-
-  const fetchData = async () => {
-    const { id } = router.query
-    if (id === undefined) {
-      return
-    }
-
-    const res = await axios.post<GetPostOutput>("/api/get_post", {
-      slug: id,
-    })
-
-    // console.log(res.data)
-    if (res.data.success === false || res.data.result.postInfo === null) {
-      router.replace("/")
-    } else {
-      const postInfo = res.data.result.postInfo as any
-      setTitle(postInfo.properties.Page.title[0].plain_text)
-      setGenres([
-        ...postInfo.properties.Genre.multi_select.map((g: any) => {
-          return {
-            id: g.id,
-            name: g.name,
-            color: g.color,
-          }
-        }),
-      ])
-      setCreatedAt(postInfo.created_time)
-      setLastUpdatedAt(postInfo.last_edited_time)
-      setHtml(res.data.result.html)
-    }
-
-    setLoading(false)
-  }
-
-  useEffect(() => {
-    // const { id } = router.query
-
-    fetchData()
-  }, [router.query])
 
   const formatDateTime = (dateTime: string) => {
     const splitedDateTime = dateTime.split("T")
@@ -88,8 +48,11 @@ const PostDetail: NextPage = () => {
             <p>NONE</p>
           ) : (
             <div>
-              <div className={styles.content} dangerouslySetInnerHTML={{ __html: html }}></div>
-              <p style={{height: "50px"}}></p>
+              <div
+                className={styles.content}
+                dangerouslySetInnerHTML={{ __html: html }}
+              ></div>
+              <p style={{ height: "50px" }}></p>
             </div>
           )}
         </div>
@@ -97,42 +60,58 @@ const PostDetail: NextPage = () => {
     )
   }
 
-  return (
-    <div className={styles.container}>
-      {loading ? (
-        <div className={styles.loading}>
-          <Loading type="points" size="lg" className={styles.loading_main}>
-            Now Loading
-          </Loading>
-        </div>
-      ) : (
-        content()
-      )}
-    </div>
-  )
+  return <div className={styles.container}>{content()}</div>
 }
 
-// export const getStaticPaths: GetStaticPaths<Params> = async () => {
-//   const ids = [
-//     "i_started_this",
-//     "created_gd_rap",
-//     "i_read_rongo_to_soroban_2022",
-//     "report_sakhool_1",
-//   ]
+export const getStaticPaths: GetStaticPaths = async () => {
+  const postController = new PostController()
+  const posts = await postController.getPosts()
 
-//   return {
-//     paths: ids.map((id) => {
-//       return {
-//         params: {id: id}
-//       }
-//     }),
-//     fallback: false,
-//   }
-// }
+  const paths = posts.map((post) => `/post/${post.slug}`)
+  return { paths, fallback: false }
+}
 
-// export const getStaticProps: GetStaticProps<{}> = (context) => {
-//   // context.params
-//   return {} as GetStaticPropsResult<{}>
-// }
+export const getStaticProps: GetStaticProps<PostDetailType> = async (ctx) => {
+  try {
+    if (
+      ctx.params === undefined ||
+      ctx.params.id == undefined ||
+      Array.isArray(ctx.params.id)
+    ) {
+      return {
+        notFound: true,
+      }
+    }
+
+    const id = ctx.params.id
+
+    const postController = new PostController()
+
+    const post = await postController.getPost(id)
+    const postInfo = post.postInfo as any
+
+    return {
+      props: {
+        html: post.html,
+        title: postInfo.properties.Page.title[0].plain_text ?? "",
+        genres: [
+          ...postInfo.properties.Genre.multi_select.map((g: any) => {
+            return {
+              id: g.id,
+              name: g.name,
+              color: g.color,
+            }
+          }),
+        ],
+        createdAt: postInfo.created_time ?? "",
+        lastUpdatedAt: postInfo.last_edited_time ?? "",
+      },
+    }
+  } catch (err) {
+    return {
+      notFound: true,
+    }
+  }
+}
 
 export default PostDetail

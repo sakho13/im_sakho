@@ -4,7 +4,7 @@
   height: calc(100vh - 306px);
   overflow-y: scroll;
   text-align: center;
-  width: 100%;
+  width: 980px;
 }
 
 .container::-webkit-scrollbar {
@@ -49,12 +49,15 @@
 
 .post_container {
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .post_cell {
   display: flex;
-  height: fit-content;
+  height: 220px;
   margin: 8px 16px;
+  width: 415px;
 
   border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
   border-style: solid;
@@ -77,15 +80,28 @@
 }
 
 .post_cell_body {
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  padding: 5px 10px;
+}
+
+.post_cell_title {
+  height: 80px;
+  margin: 0;
+  overflow: hidden;
+  padding-top: 10px;
 }
 
 .post_cell_date {
   cursor: pointer;
+  font-size: 14px;
+  margin: 0;
 }
 
 .post_cell_genres > p {
   cursor: pointer;
+  margin: 10px 0;
 }
 
 .card_link {
@@ -227,6 +243,7 @@
 @media (max-width: 600px) {
   .post_cell {
     margin: 8px 0;
+    width: 100%;
   }
 
   .post_cell_date {
