@@ -1,9 +1,9 @@
-import { NextPage } from "next";
+import { NextPage } from "next"
 import styles from "../styles/link_buttons.module.scss"
 
 const LinkButtons: NextPage = () => {
   const newTab = (url: string) => {
-    window.open(url, '_blank')
+    window.open(url, "_blank")
   }
 
   return (
@@ -21,6 +21,12 @@ const LinkButtons: NextPage = () => {
         }
       >
         YouTube
+      </button>
+      <button
+        className={styles.button55}
+        onClick={() => newTab("https://qiita.com/SaKho13")}
+      >
+        Qiita
       </button>
     </div>
   )
