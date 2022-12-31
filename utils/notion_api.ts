@@ -66,7 +66,7 @@ export class NotionApi {
   public async getPost(
     slug: string,
   ): Promise<[PageObjectResponse | PartialPageObjectResponse | null, any[]]> {
-    console.log(slug)
+    // console.log(slug)
     const res1 = await this.notion.databases.query({
       database_id: this.dbId,
       filter: {

@@ -7,10 +7,11 @@ import { PostType } from "../pages/api/api_output_types"
 import styles from "../styles/post_list.module.scss"
 import { useRouter } from "next/router"
 import Genrebar from "./genrebar"
+import { PostListProps } from "../pages/post"
 
-const PostList: NextPage = () => {
+const PostList: NextPage<PostListProps> = ({ posts = [] }: PostListProps) => {
   const [nextPost, setNextPost] = useState<string>("")
-  const [posts, setPosts] = useState<PostType[]>([])
+  // const [posts, setPosts] = useState<PostType[]>([])
   const [loading, setLoading] = useState(true)
   const [loadingButton, setLoadingButton] = useState(false)
 
@@ -20,18 +21,18 @@ const PostList: NextPage = () => {
     if (!loading) {
       setLoadingButton(true)
     }
-    const res = await axios.post<GetPostsOutput>("/api/get_posts", {
-      nextCursor: nextPost === "" ? null : nextPost,
-    })
-    if (res.data.success) {
-      setPosts([...posts, ...res.data.result.posts])
+    // const res = await axios.post<GetPostsOutput>("/api/get_posts", {
+    //   nextCursor: nextPost === "" ? null : nextPost,
+    // })
+    // if (res.data.success) {
+    //   setPosts([...posts, ...res.data.result.posts])
 
-      if (res.data.result.nextCursor) {
-        setNextPost(res.data.result.nextCursor)
-      } else {
-        setNextPost("")
-      }
-    }
+    //   if (res.data.result.nextCursor) {
+    //     setNextPost(res.data.result.nextCursor)
+    //   } else {
+    //     setNextPost("")
+    //   }
+    // }
     setLoading(false)
     setLoadingButton(false)
   }
@@ -123,8 +124,5 @@ const PostList: NextPage = () => {
     </div>
   )
 }
-
-// export async function getStaticPaths<GetStaticPaths>() {
-// }
 
 export default PostList
