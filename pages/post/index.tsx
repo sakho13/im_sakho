@@ -1,29 +1,29 @@
 import type { GetStaticProps, NextPage } from "next"
-import PostList from "../../components/post_list"
-import { PostController } from "../../lib/post/PostController"
-import styles from "../../styles/post_index.module.scss"
-import { PostType } from "../api/api_output_types"
+import PostList from "@/components/post_list"
+import { PostController } from "@/lib/post/PostController"
+import styles from "@/styles/post_index.module.scss"
+import { BlogInfo } from "@/types/blog"
 
-export type PostListProps = {
-  posts: PostType[]
+export type PostListOnlyProps = {
+  blogs: BlogInfo[]
 }
 
-const Post: NextPage<PostListProps> = (props: PostListProps) => {
+const Post: NextPage<PostListOnlyProps> = ({ blogs }: PostListOnlyProps) => {
   return (
     <div className={styles.container}>
-      <PostList posts={props.posts} />
+      <PostList blogs={blogs} />
     </div>
   )
 }
 
-export const getStaticProps: GetStaticProps<PostListProps> = async () => {
+export const getStaticProps: GetStaticProps<PostListOnlyProps> = async () => {
   const postController = new PostController()
 
-  const posts = await postController.getPosts()
+  const blogs = await postController.getMicroCMSPosts()
 
   return {
     props: {
-      posts,
+      blogs,
     },
   }
 }

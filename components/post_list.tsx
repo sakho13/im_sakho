@@ -1,25 +1,19 @@
-import type { NextPage, GetStaticPaths } from "next"
-import { useEffect, useState } from "react"
-import axios from "axios"
-import { Button, Grid, Loading } from "@nextui-org/react"
-import { GetPostsOutput } from "../pages/api/get_posts"
-import { PostType } from "../pages/api/api_output_types"
+import type { NextPage } from "next"
 import styles from "../styles/post_list.module.scss"
 import { useRouter } from "next/router"
-import Genrebar from "./genrebar"
-import { PostListProps } from "../pages/post"
+import { BlogInfo } from "@/types/blog"
+import { convDate } from "@/lib/date_utility/date_utility"
+import CategoryBar from "./category_bar"
 
-const PostList: NextPage<PostListProps> = ({ posts = [] }: PostListProps) => {
+export type PostListProps = {
+  blogs: BlogInfo[]
+}
+
+const PostList: NextPage<PostListProps> = ({ blogs = [] }: PostListProps) => {
   const router = useRouter()
 
   const redirectPostTo = (id: string) => {
     router.push(`/post/${id}`)
-  }
-
-  const formatDateTime = (dateTime: string) => {
-    const splitedDateTime = dateTime.split("T")
-    const [year, month, date] = splitedDateTime[0].split("-")
-    return `${year}年 ${month}月 ${date}日`
   }
 
   return (
@@ -27,42 +21,41 @@ const PostList: NextPage<PostListProps> = ({ posts = [] }: PostListProps) => {
       <h1>Posts</h1>
 
       <div className={styles.post_container}>
-        {posts.map((post) => (
+        {blogs.map((blog) => (
           <div
             className={styles.post_cell}
-            key={post.slug}
+            key={blog.id}
             onClick={(e) => {
-              redirectPostTo(post.slug)
+              redirectPostTo(blog.id)
             }}
           >
             <div className={styles.post_cell_icon}>
               {/* アイコン */}
-              {post.icon === null ? (
-                <p className={styles.icon}>{"📄"}</p>
-              ) : !post.icon.isUrl ? (
-                <p className={styles.icon}>{post.icon.icon}</p>
-              ) : (
-                // eslint-disable-next-line @next/next/no-img-element
+              {blog.eyecatch ? (
                 <img
                   className={styles.svg_icon}
-                  src={post.icon.icon}
                   alt="icon"
+                  src={blog.eyecatch.url}
                 />
+              ) : blog.icon.length === 0 ? (
+                <p className={styles.icon}>{"📄"}</p>
+              ) : (
+                <p className={styles.icon}>{blog.icon[0]}</p>
               )}
             </div>
 
             <div className={styles.post_cell_body}>
-              <p className={styles.post_cell_title} title={post.title}>
-                {post.title}
+              <p className={styles.post_cell_title} title={blog.title}>
+                {blog.title}
               </p>
               <p className={styles.post_cell_date}>
-                <span>作成日: {formatDateTime(post.created_at)}</span>
+                <span>作成日: {convDate(blog.createdAt)}</span>
               </p>
               <p className={styles.post_cell_date}>
-                <span>最終更新日: {formatDateTime(post.last_edited_at)}</span>
+                <span>最終更新日: {convDate(blog.revisedAt)}</span>
               </p>
               <div className={styles.post_cell_genres}>
-                <Genrebar genres={post.genres} />
+                <CategoryBar categories={blog.category} />
               </div>
             </div>
           </div>

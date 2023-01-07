@@ -1,12 +1,14 @@
+import CategoryBar from "@/components/category_bar"
+import { convDate } from "@/lib/date_utility/date_utility"
+import { CategoryInfo } from "@/types/category"
 import type { NextPage, GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
-import Genrebar from "../../components/genrebar"
 import { PostController } from "../../lib/post/PostController"
 import styles from "../../styles/post_detail.module.scss"
-import { PostGenreType } from "../api/api_output_types"
+
 export type PostDetailType = {
   title: string
-  genres: PostGenreType[]
+  categories: CategoryInfo[]
   createdAt: string
   lastUpdatedAt: string
   html: string
@@ -14,18 +16,12 @@ export type PostDetailType = {
 
 const PostDetail: NextPage<PostDetailType> = ({
   title,
-  genres,
+  categories,
   createdAt,
   lastUpdatedAt,
   html,
 }: PostDetailType) => {
   const router = useRouter()
-
-  const formatDateTime = (dateTime: string) => {
-    const splitedDateTime = dateTime.split("T")
-    const [year, month, date] = splitedDateTime[0].split("-")
-    return `${year}年 ${month}月 ${date}日`
-  }
 
   /**
    * 記事をNOTIONのレスポンスから整形する関数
@@ -37,10 +33,9 @@ const PostDetail: NextPage<PostDetailType> = ({
         <div>
           <h1 className={styles.title_part}>{title}</h1>
           <p className={styles.date_part}>
-            作成日: {formatDateTime(createdAt)} / 最終更新日:{" "}
-            {formatDateTime(lastUpdatedAt)}
+            作成日: {createdAt} / 最終更新日: {lastUpdatedAt}
           </p>
-          <Genrebar genres={genres} />
+          <CategoryBar categories={categories} />
         </div>
 
         <div className={styles.content_part}>
@@ -48,6 +43,28 @@ const PostDetail: NextPage<PostDetailType> = ({
             <p>NONE</p>
           ) : (
             <div>
+              <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+                integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0"
+                crossOrigin="anonymous"
+              />
+
+              <script
+                defer
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+                integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4"
+                crossOrigin="anonymous"
+              ></script>
+
+              <script
+                defer
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+                integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+                crossOrigin="anonymous"
+              >
+                renderMathInElement(document.body)
+              </script>
               <div
                 className={styles.content}
                 dangerouslySetInnerHTML={{ __html: html }}
@@ -65,9 +82,9 @@ const PostDetail: NextPage<PostDetailType> = ({
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const postController = new PostController()
-  const posts = await postController.getPosts()
+  const blogs = await postController.getMicroCMSPosts()
 
-  const paths = posts.map((post) => `/post/${post.slug}`)
+  const paths = blogs.map((blog) => `/post/${blog.id}`)
   return { paths, fallback: false }
 }
 
@@ -87,24 +104,20 @@ export const getStaticProps: GetStaticProps<PostDetailType> = async (ctx) => {
 
     const postController = new PostController()
 
-    const post = await postController.getPost(id)
-    const postInfo = post.postInfo as any
+    const blog = await postController.getMicroCMSPost(id)
+    if (blog === null) {
+      return {
+        notFound: true,
+      }
+    }
 
     return {
       props: {
-        html: post.html,
-        title: postInfo.properties.Page.title[0].plain_text ?? "",
-        genres: [
-          ...postInfo.properties.Genre.multi_select.map((g: any) => {
-            return {
-              id: g.id,
-              name: g.name,
-              color: g.color,
-            }
-          }),
-        ],
-        createdAt: postInfo.created_time ?? "",
-        lastUpdatedAt: postInfo.last_edited_time ?? "",
+        html: blog.content,
+        title: blog.title,
+        categories: blog.category,
+        createdAt: convDate(blog.createdAt),
+        lastUpdatedAt: convDate(blog.revisedAt),
       },
     }
   } catch (err) {
