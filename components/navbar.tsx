@@ -16,12 +16,12 @@ const Navbar: NextPage = () => {
    */
   const changePage = (name: PageNames) => {
     try {
-      event({
-        action: "jump_page_nav",
-        category: "Action",
-        label: "Nav",
-        value: name,
-      })
+      // event({
+      //   action: "jump_page_nav",
+      //   category: "Action",
+      //   label: "Nav",
+      //   value: name,
+      // })
     } catch (err) {
       // console.warn(err)
     }

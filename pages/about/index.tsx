@@ -1,12 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import type { NextPage } from 'next'
-import AboutMe from '../../components/about_me'
+import type { NextPage } from "next"
+import AboutMe from "../../components/about_me"
 
 const About: NextPage = () => {
-
-  return (
-    <AboutMe />
-  )
+  return <AboutMe noText={false} />
 }
 
 export default About

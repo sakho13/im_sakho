@@ -1,4 +1,5 @@
 import { Blog, BlogInfo } from "@/types/blog"
+import cheerio from "cheerio"
 import katex from "katex"
 import { createClient, GetRequest, MicroCMSListResponse } from "microcms-js-sdk"
 
@@ -53,7 +54,7 @@ export class PostController {
         },
       })
 
-      data.content = data.content
+      const replacedEqHtml = data.content
         .replaceAll(/\$\$[^\$]*\$\$/g, (substring) =>
           katex.renderToString(
             substring
@@ -70,6 +71,21 @@ export class PostController {
             { strict: "ignore", displayMode: false },
           ),
         )
+
+      const cheerioHtml = cheerio.load(replacedEqHtml)
+
+      cheerioHtml(".katex-display").each((_, element) => {
+        // cheerioHtml(element).css("height", "50px")
+        cheerioHtml(".katex-html").each((_, katexElement) => {
+          cheerioHtml(katexElement).css("overflow-x", "auto")
+          cheerioHtml(katexElement).css("overflow-y", "clip")
+        })
+
+        // cheerioHtml(".tag").each((_, tagElement) => {
+        // })
+      })
+
+      data.content = cheerioHtml.html()
       return data
     } catch {
       return null

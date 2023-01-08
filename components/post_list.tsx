@@ -33,14 +33,14 @@ const PostList: NextPage<PostListProps> = ({ blogs = [] }: PostListProps) => {
               {/* アイコン */}
               {blog.eyecatch ? (
                 <img
-                  className={styles.svg_icon}
+                  className={styles.post_cell_icon_img}
                   alt="icon"
                   src={blog.eyecatch.url}
                 />
               ) : blog.icon.length === 0 ? (
-                <p className={styles.icon}>{"📄"}</p>
+                <p className={styles.post_cell_icon_icon}>{"📄"}</p>
               ) : (
-                <p className={styles.icon}>{blog.icon[0]}</p>
+                <p className={styles.post_cell_icon_icon}>{blog.icon[0]}</p>
               )}
             </div>
 

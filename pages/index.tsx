@@ -1,9 +1,11 @@
 import type { GetStaticProps, NextPage } from "next"
-import PostList from "../components/post_list"
-import AboutMe from "../components/about_me"
-import { Grid } from "@nextui-org/react"
-import { PostController } from "../lib/post/PostController"
+import PostList from "@/components/post_list"
+import AboutMe from "@/components/about_me"
+import { PostController } from "@/lib/post/PostController"
 import { BlogInfo } from "@/types/blog"
+import { Grid } from "@mui/material"
+// import ExpandLess from "@mui/icons-material/ExpandLess"
+// import ExpandMore from "@mui/icons-material/ExpandMore"
 
 type HomeProps = {
   blogs: BlogInfo[]
@@ -11,14 +13,14 @@ type HomeProps = {
 
 const Home: NextPage<HomeProps> = ({ blogs }: HomeProps) => {
   return (
-    <Grid.Container>
-      <Grid xs={12} md={5} justify="center">
-        <AboutMe />
+    <Grid container sx={{ flexDirection: { md: "row", xs: "column-reverse" } }}>
+      <Grid item xs={12} md={5}>
+        <AboutMe noMenu={false} />
       </Grid>
-      <Grid xs={12} md={7} justify="center">
+      <Grid item xs={12} md={7}>
         <PostList blogs={blogs} />
       </Grid>
-    </Grid.Container>
+    </Grid>
   )
 }
 

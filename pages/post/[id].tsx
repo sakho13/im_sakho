@@ -29,7 +29,7 @@ const PostDetail: NextPage<PostDetailType> = ({
    */
   const content = () => {
     return (
-      <div>
+      <>
         <div>
           <h1 className={styles.title_part}>{title}</h1>
           <p className={styles.date_part}>
@@ -42,7 +42,7 @@ const PostDetail: NextPage<PostDetailType> = ({
           {html === null ? (
             <p>NONE</p>
           ) : (
-            <div>
+            <>
               <link
                 rel="stylesheet"
                 href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
@@ -70,10 +70,10 @@ const PostDetail: NextPage<PostDetailType> = ({
                 dangerouslySetInnerHTML={{ __html: html }}
               ></div>
               <p style={{ height: "50px" }}></p>
-            </div>
+            </>
           )}
         </div>
-      </div>
+      </>
     )
   }
 

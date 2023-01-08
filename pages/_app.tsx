@@ -7,9 +7,12 @@ import { useRouter } from "next/router"
 import { useEffect } from "react"
 import { GA_ID, pageview } from "../lib/gtag"
 import Script from "next/script"
+import { usePageView } from "@/hooks/usePageView"
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
+
+  usePageView()
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {

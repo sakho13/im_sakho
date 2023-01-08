@@ -17,6 +17,7 @@ export const pageview = (url: string) => {
   try {
     window.gtag("config", GA_ID, {
       page_path: url,
+      content_id: url.split("/post/")[1],
     })
   } catch (err) {
     // console.warn(err)
