@@ -46,6 +46,11 @@ const AboutMe: NextPage<AboutMeProps> = ({
       subCategories: [],
     },
     {
+      id: "qzk7dljhfu",
+      name: "動画",
+      subCategories: [],
+    },
+    {
       id: "ozfqll7ml0dg",
       name: "読書",
       subCategories: [],
