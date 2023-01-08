@@ -1,0 +1,22 @@
+@import "_variables.scss";
+@import "mixins.scss";
+
+.container {
+  width: 630px;
+
+  h1 {
+    width: fit-content;
+    margin: 0 auto;
+  }
+
+  p {
+    margin: 0 30px;
+    font-size: 20px;
+    line-height: 22px;
+  }
+
+  @include max-screen(630px) {
+    width: 100%;
+    padding: 0 20px;
+  }
+}
