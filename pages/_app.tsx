@@ -69,8 +69,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', '${GA_ID}');
-                gtag('event', 'jump_page_nav');
+                gtag('config', '${GA_ID}', {
+                  page_path: window.location.pathname
+                });
               `}
             </Script>
           </>
