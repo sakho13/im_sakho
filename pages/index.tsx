@@ -4,8 +4,6 @@ import AboutMe from "@/components/about_me"
 import { PostController } from "@/lib/post/PostController"
 import { BlogInfo } from "@/types/blog"
 import { Grid } from "@mui/material"
-// import ExpandLess from "@mui/icons-material/ExpandLess"
-// import ExpandMore from "@mui/icons-material/ExpandMore"
 
 type HomeProps = {
   blogs: BlogInfo[]
