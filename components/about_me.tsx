@@ -105,7 +105,6 @@ const AboutMe: NextPage<AboutMeProps> = ({
               src="/my_icon.png"
               alt="my_icon"
               className={styles.img_cover}
-              objectFit="cover"
               width={iconWidth}
               height={iconWidth}
             />

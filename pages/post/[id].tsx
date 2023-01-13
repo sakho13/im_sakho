@@ -2,7 +2,7 @@ import CategoryBar from "@/components/category_bar"
 import { convDate } from "@/lib/date_utility/date_utility"
 import { CategoryInfo } from "@/types/category"
 import type { NextPage, GetStaticPaths, GetStaticProps } from "next"
-import { useRouter } from "next/router"
+import Head from "next/head"
 import { PostController } from "../../lib/post/PostController"
 import styles from "../../styles/post_detail.module.scss"
 
@@ -21,8 +21,6 @@ const PostDetail: NextPage<PostDetailType> = ({
   lastUpdatedAt,
   html,
 }: PostDetailType) => {
-  const router = useRouter()
-
   /**
    * 記事をNOTIONのレスポンスから整形する関数
    * @returns
@@ -77,7 +75,14 @@ const PostDetail: NextPage<PostDetailType> = ({
     )
   }
 
-  return <div className={styles.container}>{content()}</div>
+  return (
+    <>
+      <Head>
+        <title>{title ?? "unknown"} - Sakho&apos;s Portfolios -</title>
+      </Head>
+      <div className={styles.container}>{content()}</div>
+    </>
+  )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

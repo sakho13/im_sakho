@@ -4,6 +4,7 @@ import AboutMe from "@/components/about_me"
 import { PostController } from "@/lib/post/PostController"
 import { BlogInfo } from "@/types/blog"
 import { Grid } from "@mui/material"
+import Head from "next/head"
 
 type HomeProps = {
   blogs: BlogInfo[]
@@ -11,25 +12,35 @@ type HomeProps = {
 
 const Home: NextPage<HomeProps> = ({ blogs }: HomeProps) => {
   return (
-    <Grid container sx={{ flexDirection: { md: "row", xs: "column-reverse" } }}>
-      <Grid item xs={12} md={5}>
-        <AboutMe noMenu={false} />
+    <>
+      <Head>
+        <title>Sakho&apos;s Portfolios</title>
+      </Head>
+
+      <Grid
+        container
+        sx={{ flexDirection: { md: "row", xs: "column-reverse" } }}
+      >
+        <Grid item xs={12} md={5}>
+          <AboutMe noMenu={false} />
+        </Grid>
+        <Grid item xs={12} md={7}>
+          <PostList blogs={blogs} />
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={7}>
-        <PostList blogs={blogs} />
-      </Grid>
-    </Grid>
+    </>
   )
 }
 
-export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+export const getStaticProps: GetStaticProps<HomeProps> = async (context) => {
+  // console.log("getStaticProps")
   const postController = new PostController()
 
   const blogs = await postController.getMicroCMSPosts()
 
   return {
     props: {
-      blogs,
+      blogs: blogs,
     },
   }
 }

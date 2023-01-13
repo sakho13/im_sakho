@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import AboutMe from "@/components/about_me"
 import { Grid } from "@mui/material"
+import Head from "next/head"
 
 export type PostListOnlyProps = {
   blogs: BlogInfo[]
@@ -37,50 +38,56 @@ const Post: NextPage<PostListOnlyProps> = ({ blogs }: PostListOnlyProps) => {
   }, [router.query])
 
   return (
-    <Grid
-      container
-      className={styles.container}
-      sx={{
-        flexDirection: { md: "row", xs: "column-reverse" },
-      }}
-    >
+    <>
+      <Head>
+        <title>Posts - Sakho&apos;s Portfolios -</title>
+      </Head>
+
       <Grid
-        item
-        xs={12}
-        md={3}
+        container
+        className={styles.container}
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: { xs: "30px" },
+          flexDirection: { md: "row", xs: "column-reverse" },
         }}
       >
-        <AboutMe
-          noTitle={true}
-          noIcon={true}
-          noLink={true}
-          noText={true}
-          noMenu={false}
-        />
+        <Grid
+          item
+          xs={12}
+          md={3}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: { xs: "30px" },
+          }}
+        >
+          <AboutMe
+            noTitle={true}
+            noIcon={true}
+            noLink={true}
+            noText={true}
+            noMenu={false}
+          />
+        </Grid>
+        <Grid item xs={12} md={9}>
+          <PostList
+            blogs={blogs.filter((blog) => {
+              if (categoryId === "all" || categoryId === "") {
+                return true
+              } else {
+                const categories = blog.category.map((c) => c.id)
+                return (
+                  categories.includes(categoryId) &&
+                  (subCategoryId === ""
+                    ? true
+                    : categories.includes(subCategoryId))
+                )
+              }
+            })}
+          />
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={9}>
-        <PostList
-          blogs={blogs.filter((blog) => {
-            if (categoryId === "all" || categoryId === "") {
-              return true
-            } else {
-              const categories = blog.category.map((c) => c.id)
-              return (
-                categories.includes(categoryId) &&
-                (subCategoryId === ""
-                  ? true
-                  : categories.includes(subCategoryId))
-              )
-            }
-          })}
-        />
-      </Grid>
-    </Grid>
+    </>
   )
 }
 
