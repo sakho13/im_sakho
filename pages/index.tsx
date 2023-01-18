@@ -21,10 +21,10 @@ const Home: NextPage<HomeProps> = ({ blogs }: HomeProps) => {
         container
         sx={{ flexDirection: { md: "row", xs: "column-reverse" } }}
       >
-        <Grid item xs={12} md={5}>
+        <Grid item xs={12} md={4}>
           <AboutMe noMenu={false} />
         </Grid>
-        <Grid item xs={12} md={7}>
+        <Grid item xs={12} md={8}>
           <PostList blogs={blogs} />
         </Grid>
       </Grid>
