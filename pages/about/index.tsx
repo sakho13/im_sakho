@@ -19,7 +19,7 @@ const About: NextPage = () => {
           duration: 0.5,
         }}
       >
-        <AboutMe noText={false} noTechs={false} />
+        <AboutMe noText={false} />
       </motion.div>
     </>
   )
