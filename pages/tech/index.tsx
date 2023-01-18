@@ -3,6 +3,40 @@ import styles from "@/styles/tech_index.module.scss"
 import Head from "next/head"
 
 const Tech: NextPage = () => {
+  const contents: {
+    title: string
+    paragraph: string[]
+  }[] = [
+    {
+      title: "Next.js",
+      paragraph: [],
+    },
+    {
+      title: "TypeScript",
+      paragraph: [],
+    },
+    {
+      title: "microCMS",
+      paragraph: ["to manage posts"],
+    },
+    {
+      title: "SCSS",
+      paragraph: [],
+    },
+    {
+      title: "MaterialUI",
+      paragraph: ["to control layouts"],
+    },
+    {
+      title: "Vercel",
+      paragraph: ["to deploy"],
+    },
+    {
+      title: "Google Analytics",
+      paragraph: [],
+    },
+  ]
+
   return (
     <>
       <Head>
@@ -12,25 +46,16 @@ const Tech: NextPage = () => {
       <div className={styles.container}>
         <h1>Usage Techs</h1>
 
-        <h2>★ Next.js</h2>
-
-        <h2>★ TypeScript</h2>
-
-        <h2>★ microCMS</h2>
-
-        <p>to manage posts</p>
-
-        <h2>★ SCSS</h2>
-
-        <h2>★ MaterialUI</h2>
-
-        <p>to control layouts</p>
-
-        <h2>★ Vercel</h2>
-
-        <p>to deploy</p>
-
-        <h2>☆ Google Analytics</h2>
+        {contents.map((content) => {
+          return (
+            <>
+              <h2>★ {content.title}</h2>
+              {content.paragraph.map((p) => (
+                <p>{p}</p>
+              ))}
+            </>
+          )
+        })}
       </div>
     </>
   )
