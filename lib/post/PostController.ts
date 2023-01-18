@@ -7,6 +7,7 @@ export class PostController {
   private microCMS: ReturnType<typeof createClient>
 
   constructor() {
+    // console.log("SD: ", process.env.SERVICE_DOMAIN)
     this.microCMS = createClient({
       serviceDomain: process.env.SERVICE_DOMAIN ?? "",
       apiKey: process.env.API_KEY ?? "",
@@ -14,31 +15,35 @@ export class PostController {
   }
 
   public async getMicroCMSPosts(): Promise<BlogInfo[]> {
-    let totalCount = 0
-    let limit = 0
-
-    const input: GetRequest = {
-      endpoint: "blogs",
-      queries: {
-        limit: 10,
-        orders: "-publishedAt",
-        filters:
-          process.env.DEVELOP !== undefined && process.env.DEVELOP === "DEVELOP"
-            ? undefined // 開発環境
-            : "isTest[equals]false", // 実環境
-      },
+    // console.log("start")
+    let cnt = 0
+    const input = (offset: number): GetRequest => {
+      return {
+        endpoint: "blogs",
+        queries: {
+          offset,
+          limit: 10,
+          orders: "-publishedAt",
+          filters:
+            process.env.DEVELOP !== undefined &&
+            process.env.DEVELOP === "DEVELOP"
+              ? undefined // 開発環境
+              : "isTest[equals]false", // 実環境
+        },
+      }
     }
+    const res = await this.microCMS.get<MicroCMSListResponse<Blog>>(input(cnt))
+    const totalCount = res.totalCount
 
-    const res = await this.microCMS.get<MicroCMSListResponse<Blog>>(input)
-    totalCount = res.totalCount
-    limit = res.limit
     let blogs: BlogInfo[] = [...res.contents]
+    cnt = blogs.length
 
-    while (limit <= totalCount) {
-      const res = await this.microCMS.get<MicroCMSListResponse<Blog>>(input)
-      totalCount = res.totalCount
-      limit = res.limit
+    while (cnt < totalCount) {
+      const res = await this.microCMS.get<MicroCMSListResponse<Blog>>(
+        input(cnt),
+      )
       blogs = [...blogs, ...res.contents]
+      cnt += blogs.length
     }
 
     return blogs
