@@ -1,6 +1,7 @@
 import CategoryBar from "@/components/category_bar"
 import { convDate } from "@/lib/date_utility/date_utility"
 import { CategoryInfo } from "@/types/category"
+import { motion } from "framer-motion"
 import type { NextPage, GetStaticPaths, GetStaticProps } from "next"
 import Head from "next/head"
 import { PostController } from "../../lib/post/PostController"
@@ -80,7 +81,17 @@ const PostDetail: NextPage<PostDetailType> = ({
       <Head>
         <title>{title ?? "unknown"} - Sakho&apos;s Portfolios -</title>
       </Head>
-      <div className={styles.container}>{content()}</div>
+
+      <motion.div
+        initial={{ opacity: 0 }} // 初期状態
+        animate={{ opacity: 1 }} // マウント時
+        exit={{ opacity: 0 }} // アンマウント時
+        transition={{
+          duration: 0.5,
+        }}
+      >
+        <div className={styles.container}>{content()}</div>
+      </motion.div>
     </>
   )
 }

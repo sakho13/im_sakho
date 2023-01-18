@@ -78,6 +78,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           "undefined"
         )}
       </>
+
       <div className={styles.main}>
         <Component {...pageProps} />
       </div>

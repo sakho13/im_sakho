@@ -8,6 +8,7 @@ import { useRouter } from "next/router"
 import AboutMe from "@/components/about_me"
 import { Grid } from "@mui/material"
 import Head from "next/head"
+import { motion } from "framer-motion"
 
 export type PostListOnlyProps = {
   blogs: BlogInfo[]
@@ -43,50 +44,59 @@ const Post: NextPage<PostListOnlyProps> = ({ blogs }: PostListOnlyProps) => {
         <title>Posts - Sakho&apos;s Portfolios -</title>
       </Head>
 
-      <Grid
-        container
-        className={styles.container}
-        sx={{
-          flexDirection: { md: "row", xs: "column-reverse" },
+      <motion.div
+        initial={{ opacity: 0 }} // 初期状態
+        animate={{ opacity: 1 }} // マウント時
+        exit={{ opacity: 0 }} // アンマウント時
+        transition={{
+          duration: 0.5,
         }}
       >
         <Grid
-          item
-          xs={12}
-          md={3}
+          container
+          className={styles.container}
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: { xs: "30px" },
+            flexDirection: { md: "row", xs: "column-reverse" },
           }}
         >
-          <AboutMe
-            noTitle={true}
-            noIcon={true}
-            noLink={true}
-            noText={true}
-            noMenu={false}
-          />
+          <Grid
+            item
+            xs={12}
+            md={3}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: { xs: "30px" },
+            }}
+          >
+            <AboutMe
+              noTitle={true}
+              noIcon={true}
+              noLink={true}
+              noText={true}
+              noMenu={false}
+            />
+          </Grid>
+          <Grid item xs={12} md={9}>
+            <PostList
+              blogs={blogs.filter((blog) => {
+                if (categoryId === "all" || categoryId === "") {
+                  return true
+                } else {
+                  const categories = blog.category.map((c) => c.id)
+                  return (
+                    categories.includes(categoryId) &&
+                    (subCategoryId === ""
+                      ? true
+                      : categories.includes(subCategoryId))
+                  )
+                }
+              })}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={9}>
-          <PostList
-            blogs={blogs.filter((blog) => {
-              if (categoryId === "all" || categoryId === "") {
-                return true
-              } else {
-                const categories = blog.category.map((c) => c.id)
-                return (
-                  categories.includes(categoryId) &&
-                  (subCategoryId === ""
-                    ? true
-                    : categories.includes(subCategoryId))
-                )
-              }
-            })}
-          />
-        </Grid>
-      </Grid>
+      </motion.div>
     </>
   )
 }
