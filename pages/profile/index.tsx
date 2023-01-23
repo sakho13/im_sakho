@@ -43,15 +43,15 @@ const About: NextPage = () => {
 
             {Histories.map((history, i) => {
               return (
-                <div key={i} className={styles.history_box}>
+                <div key={`career-${i}`} className={styles.history_box}>
                   <p className={styles.history_box_title}>{history.title}</p>
 
                   <p className={styles.history_box_date}>{history.date}</p>
 
                   {history.works.length > 0 ? (
                     <ul className={styles.history_box_work}>
-                      {history.works.map((work) => (
-                        <li>{work}</li>
+                      {history.works.map((work, wi) => (
+                        <li key={`career-${i}-w-${wi}`}>{work}</li>
                       ))}
                     </ul>
                   ) : undefined}
@@ -65,8 +65,8 @@ const About: NextPage = () => {
 
                   <div className={styles.history_box_history}>
                     <p>Techs:</p>
-                    {history.techs.map((tech, j) => {
-                      return <p key={j}>{tech}</p>
+                    {history.techs.map((tech, ti) => {
+                      return <p key={`career-${i}-t-${ti}`}>{tech}</p>
                     })}
                   </div>
                 </div>

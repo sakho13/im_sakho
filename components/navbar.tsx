@@ -1,7 +1,7 @@
 import type { NextPage } from "next"
+import Link from "next/link"
 import { useRouter } from "next/router"
-import { useState } from "react"
-import { event } from "../lib/gtag"
+import { useEffect, useState } from "react"
 import styles from "../styles/navbar.module.scss"
 
 const Navbar: NextPage = () => {
@@ -10,41 +10,45 @@ const Navbar: NextPage = () => {
   const router = useRouter()
   const [currentPageName, setPageName] = useState<PageNames>("Home")
 
-  /**
-   * ページ遷移
-   * @param name
-   */
-  const changePage = (name: PageNames) => {
-    try {
-      // event({
-      //   action: "jump_page_nav",
-      //   category: "Action",
-      //   label: "Nav",
-      //   value: name,
-      // })
-    } catch (err) {
-      // console.warn(err)
-    }
-
-    switch (name) {
-      case "Home":
-        setPageName("Home")
-        router.push("/")
-        break
-      case "Profile":
+  useEffect(() => {
+    console.log(router.pathname)
+    switch (router.pathname) {
+      case "/profile":
         setPageName("Profile")
-        router.push("/profile")
         break
-      case "Posts":
+      case "/post":
         setPageName("Posts")
-        router.push("/post")
         break
-      case "Tech":
+      case "/tech":
         setPageName("Tech")
-        router.push("/tech")
+        break
+      default:
+        setPageName("Home")
         break
     }
-  }
+  }, [router.pathname])
+
+  const navLinks: {
+    title: PageNames
+    path: string
+  }[] = [
+    {
+      title: "Home",
+      path: "/",
+    },
+    {
+      title: "Profile",
+      path: "/profile",
+    },
+    {
+      title: "Posts",
+      path: "/post",
+    },
+    {
+      title: "Tech",
+      path: "/tech",
+    },
+  ]
 
   return (
     <header className={styles.container}>
@@ -58,31 +62,16 @@ const Navbar: NextPage = () => {
       </div>
 
       <ul className={styles.nav_list}>
-        <li
-          onClick={() => changePage("Home")}
-          className={currentPageName === "Home" ? styles.current : ""}
-        >
-          Home
-        </li>
-        <li
-          onClick={() => changePage("Profile")}
-          className={currentPageName === "Profile" ? styles.current : ""}
-        >
-          Profile
-        </li>
-        <li
-          onClick={() => changePage("Posts")}
-          className={currentPageName === "Posts" ? styles.current : ""}
-        >
-          Posts
-        </li>
-
-        <li
-          onClick={() => changePage("Tech")}
-          className={currentPageName === "Tech" ? styles.current : ""}
-        >
-          Tech
-        </li>
+        {navLinks.map((link) => {
+          return (
+            <li
+              key={link.title + "-nav"}
+              className={currentPageName === link.title ? styles.current : ""}
+            >
+              <Link href={link.path}>{link.title}</Link>
+            </li>
+          )
+        })}
       </ul>
     </header>
   )

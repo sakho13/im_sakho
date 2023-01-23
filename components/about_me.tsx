@@ -78,7 +78,7 @@ const AboutMe: NextPage<AboutMeProps> = ({
 
             {MenuCategories.map((category) => {
               return (
-                <div key={category.id} className={styles.menu_item}>
+                <div key={"p-c-" + category.id} className={styles.menu_item}>
                   <div className={styles.menu_item_item}>
                     <div
                       className={styles.menu_item_item_label}

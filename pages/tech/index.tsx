@@ -55,14 +55,14 @@ const Tech: NextPage = () => {
         <div className={styles.container}>
           <h1>Usage Techs</h1>
 
-          {contents.map((content) => {
+          {contents.map((content, ci) => {
             return (
-              <>
+              <div key={`c${ci}`}>
                 <h2>★ {content.title}</h2>
-                {content.paragraph.map((p) => (
-                  <p>{p}</p>
+                {content.paragraph.map((p, pi) => (
+                  <p key={`c${ci}-p${pi}`}>{p}</p>
                 ))}
-              </>
+              </div>
             )
           })}
         </div>
