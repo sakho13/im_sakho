@@ -6,4 +6,9 @@ export type Category = {
   isSubCategory: boolean
 }
 
+export type MenuCategory = {
+  id: string
+  name: string
+}
+
 export type CategoryInfo = Category & MicroCMSListContent

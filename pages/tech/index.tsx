@@ -26,7 +26,7 @@ const Tech: NextPage = () => {
     },
     {
       title: "MaterialUI",
-      paragraph: ["to control layouts"],
+      paragraph: ["to support layouts"],
     },
     {
       title: "Vercel",

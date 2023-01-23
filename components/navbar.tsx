@@ -5,7 +5,7 @@ import { event } from "../lib/gtag"
 import styles from "../styles/navbar.module.scss"
 
 const Navbar: NextPage = () => {
-  type PageNames = "Home" | "AboutMe" | "Posts" | "Tech"
+  type PageNames = "Home" | "Profile" | "Posts" | "Tech"
 
   const router = useRouter()
   const [currentPageName, setPageName] = useState<PageNames>("Home")
@@ -31,9 +31,9 @@ const Navbar: NextPage = () => {
         setPageName("Home")
         router.push("/")
         break
-      case "AboutMe":
-        setPageName("AboutMe")
-        router.push("/about")
+      case "Profile":
+        setPageName("Profile")
+        router.push("/profile")
         break
       case "Posts":
         setPageName("Posts")
@@ -65,10 +65,10 @@ const Navbar: NextPage = () => {
           Home
         </li>
         <li
-          onClick={() => changePage("AboutMe")}
-          className={currentPageName === "AboutMe" ? styles.current : ""}
+          onClick={() => changePage("Profile")}
+          className={currentPageName === "Profile" ? styles.current : ""}
         >
-          AboutMe
+          Profile
         </li>
         <li
           onClick={() => changePage("Posts")}
