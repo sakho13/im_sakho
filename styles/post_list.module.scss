@@ -14,19 +14,19 @@
 
   &::-webkit-scrollbar-track {
     border-radius: 5px;
-    background: rgb(226, 226, 226, 1);
+    background: $color-scroll-bg;
 
     @include dark-mode() {
-      background: rgba(0, 0, 0, 1);
+      background: $color-scroll-bg-d;
     }
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #5a5a5a;
+    background: $color-scroll-cursor;
     border-radius: 5px;
 
     @include dark-mode() {
-      background: #1d1d1d;
+      background: $color-scroll-cursor-d;
     }
   }
 }
@@ -63,7 +63,7 @@
     }
 
     &:hover {
-      box-shadow: black 2px 8px 8px -5px;
+      box-shadow: $color-hover-shadow-d 2px 8px 8px -5px;
       transform: translate3d(0, -1px, 0);
       cursor: pointer;
     }
@@ -81,6 +81,7 @@
         line-height: $font-size;
         margin: auto 0;
         padding: 2.5px 0;
+        cursor: pointer;
       }
 
       &_img {
@@ -88,6 +89,7 @@
         font-size: $font-size;
         line-height: $font-size;
         margin: auto 0;
+        cursor: pointer;
       }
     }
 
@@ -103,6 +105,7 @@
       margin: 0;
       overflow: hidden;
       padding-top: 10px;
+      cursor: pointer;
     }
 
     &_date {
