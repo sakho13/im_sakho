@@ -19,6 +19,11 @@ export const MenuCategories: (MenuCategory & {
     subCategories: [],
   },
   {
+    id: "kintore",
+    name: "筋トレ",
+    subCategories: [],
+  },
+  {
     id: "ozfqll7ml0dg",
     name: "読書",
     subCategories: [],
