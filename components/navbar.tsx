@@ -5,33 +5,7 @@ import { useEffect, useState } from "react"
 import styles from "../styles/navbar.module.scss"
 
 const Navbar: NextPage = () => {
-  type PageNames = "Home" | "Profile" | "Posts" | "Tech"
-
-  const router = useRouter()
-  const [currentPageName, setPageName] = useState<PageNames>("Home")
-
-  useEffect(() => {
-    console.log(router.pathname)
-    switch (router.pathname) {
-      case "/profile":
-        setPageName("Profile")
-        break
-      case "/post":
-        setPageName("Posts")
-        break
-      case "/tech":
-        setPageName("Tech")
-        break
-      default:
-        setPageName("Home")
-        break
-    }
-  }, [router.pathname])
-
-  const navLinks: {
-    title: PageNames
-    path: string
-  }[] = [
+  const navLinks = [
     {
       title: "Home",
       path: "/",
@@ -48,7 +22,38 @@ const Navbar: NextPage = () => {
       title: "Tech",
       path: "/tech",
     },
-  ]
+    {
+      title: "Contact",
+      path: "/contact",
+    },
+  ] as const
+
+  type PageNames = (typeof navLinks)[number]["title"]
+  type Paths = (typeof navLinks)[number]["path"]
+
+  const router = useRouter()
+  const [currentPageName, setPageName] = useState<PageNames>("Home")
+
+  useEffect(() => {
+    // console.log(router.pathname)
+    switch (router.pathname as Paths) {
+      case "/profile":
+        setPageName("Profile")
+        break
+      case "/post":
+        setPageName("Posts")
+        break
+      case "/tech":
+        setPageName("Tech")
+        break
+      case "/contact":
+        setPageName("Contact")
+        break
+      default:
+        setPageName("Home")
+        break
+    }
+  }, [router.pathname])
 
   return (
     <header className={styles.container}>

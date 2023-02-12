@@ -4,7 +4,7 @@ import katex from "katex"
 import { createClient, GetRequest, MicroCMSListResponse } from "microcms-js-sdk"
 
 export class PostController {
-  private microCMS: ReturnType<typeof createClient>
+  public microCMS: ReturnType<typeof createClient>
 
   constructor() {
     // console.log("SD: ", process.env.SERVICE_DOMAIN)

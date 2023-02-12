@@ -6,6 +6,7 @@ import { BlogInfo } from "@/types/blog"
 import { Grid } from "@mui/material"
 import Head from "next/head"
 import { motion } from "framer-motion"
+import styles from "@/styles/index.module.scss"
 
 type HomeProps = {
   blogs: BlogInfo[]
@@ -31,7 +32,7 @@ const Home: NextPage<HomeProps> = ({ blogs }: HomeProps) => {
           container
           sx={{ flexDirection: { md: "row", xs: "column-reverse" } }}
         >
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={4} className={styles.container_profile}>
             <AboutMe noMenu={false} />
           </Grid>
           <Grid item xs={12} md={8}>

@@ -1,0 +1,54 @@
+@import "_variables.scss";
+@import "mixins.scss";
+
+.dm {
+  &_title {
+    width: fit-content;
+    margin: 0 auto;
+  }
+
+  &_form {
+    width: 630px;
+
+    @include max-screen(630px) {
+      width: 100%;
+    }
+
+    &_cell {
+      padding: 0 100px;
+      width: inherit;
+
+      &_title {
+        // label
+        width: 120px;
+        margin: 0;
+        margin-top: 4px;
+      }
+
+      input,
+      textarea {
+        // inputs
+        width: 100%;
+        margin: 5px 20px;
+      }
+
+      &_error {
+        margin: 4px 20px;
+        color: red;
+        height: 18px;
+      }
+
+      &_button {
+        padding: 0 100px;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+
+        button {
+          padding: 5px 30px;
+          margin: 0;
+        }
+      }
+    }
+  }
+}
