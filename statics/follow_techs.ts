@@ -6,12 +6,14 @@ export const Histories: {
   comment: string
 }[] = [
   {
-    title: "某社アルバイトにて開発に従事",
+    title: "某社アルバイト e-Learningアプリ開発",
     date: "2021年8月 ~ 現在",
     techs: [
+      "TypeScript",
       "Express.js",
       "Nuxt.js (Vue.js)",
       "TypeORM",
+      "ElasticSearch",
       "Jest",
       "MySQL",
       "AWS",
@@ -22,6 +24,7 @@ export const Histories: {
     works: [
       "API およそ30個/60 作成・担当",
       "APIのセキュリティ実装",
+      "全文検索機能の実装",
       "Jestを用いたテストコードの自動生成機能の作成",
       "10コンポーネントほどフロントを作成",
       "バグ対応",
@@ -30,10 +33,18 @@ export const Histories: {
   },
 
   {
-    title: "某R社の短期インターンで同年代数人とチーム開発",
+    title: "某社短期インターン 同年代数人とチーム開発",
     date: "2022年9月頃",
-    techs: ["Express.js", "jQuery", "GitHub"],
+    techs: ["Express.js", "jQuery", "GitHub", "socket"],
     works: ["チームリーダ", "全体(バック・フロント)の設計/開発"],
-    comment: `新卒採用 落、、、は？`,
+    comment: ``,
+  },
+
+  {
+    title: "8名でブロックプログラミングを行うアプリを開発",
+    date: "高専時代",
+    techs: ["Vue.js", "Go", "Gin"],
+    works: ["フロントエンド開発", "Goのアドバイス"],
+    comment: ``,
   },
 ]
