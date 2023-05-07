@@ -6,6 +6,14 @@ export const Histories: {
   comment: string
 }[] = [
   {
+    title: "初Chrome拡張機能「NaReader」",
+    date: "公開 2023年04月07日",
+    techs: ["TypeScript"],
+    works: [],
+    comment: "",
+  },
+
+  {
     title: "某社アルバイト e-Learningアプリ開発",
     date: "2021年8月 ~ 現在",
     techs: [
