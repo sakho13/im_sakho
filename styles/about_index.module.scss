@@ -1,0 +1,48 @@
+.history {
+  &_box {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 20px 25px;
+    margin: 10px 0 20px 0;
+    width: inherit;
+
+    &_title {
+      margin: 0;
+      font-weight: bold;
+      font-size: 17px;
+    }
+
+    &_date {
+      font-size: 14px;
+      line-height: 14px;
+      margin: 0;
+      margin-top: 5px;
+      margin-left: 10px;
+    }
+
+    &_work {
+      margin: 10px 0;
+    }
+
+    &_comment {
+      margin: 0;
+
+      span {
+        margin-right: 5px;
+      }
+    }
+
+    &_history {
+      display: flex;
+      flex-wrap: wrap;
+
+      p {
+        width: fit-content;
+        margin: 0;
+        padding: 0;
+        margin-right: 5px;
+      }
+    }
+  }
+}

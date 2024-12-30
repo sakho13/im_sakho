@@ -1,6 +1,6 @@
 import { CategoryInfo } from "@/types/category"
 import { NextPage } from "next"
-import styles from "./styles/category_bar.module.scss"
+import styles from "../styles/category_bar.module.scss"
 
 const CategoryBar: NextPage<{
   categories: CategoryInfo[]

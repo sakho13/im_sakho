@@ -1,0 +1,10 @@
+@import "_variables.scss";
+@import "mixins.scss";
+
+.container {
+  &_profile {
+    @include max-screen(900px) {
+      display: none;
+    }
+  }
+}

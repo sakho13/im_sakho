@@ -1,8 +1,9 @@
 import CategoryBar from "@/components/category_bar"
 import { convDate } from "@/lib/date_utility/date_utility"
 import { CategoryInfo } from "@/types/category"
+import { motion } from "framer-motion"
 import type { NextPage, GetStaticPaths, GetStaticProps } from "next"
-import { useRouter } from "next/router"
+import Head from "next/head"
 import { PostController } from "../../lib/post/PostController"
 import styles from "../../styles/post_detail.module.scss"
 
@@ -21,15 +22,13 @@ const PostDetail: NextPage<PostDetailType> = ({
   lastUpdatedAt,
   html,
 }: PostDetailType) => {
-  const router = useRouter()
-
   /**
    * 記事をNOTIONのレスポンスから整形する関数
    * @returns
    */
   const content = () => {
     return (
-      <div>
+      <>
         <div>
           <h1 className={styles.title_part}>{title}</h1>
           <p className={styles.date_part}>
@@ -42,7 +41,7 @@ const PostDetail: NextPage<PostDetailType> = ({
           {html === null ? (
             <p>NONE</p>
           ) : (
-            <div>
+            <>
               <link
                 rel="stylesheet"
                 href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
@@ -70,14 +69,31 @@ const PostDetail: NextPage<PostDetailType> = ({
                 dangerouslySetInnerHTML={{ __html: html }}
               ></div>
               <p style={{ height: "50px" }}></p>
-            </div>
+            </>
           )}
         </div>
-      </div>
+      </>
     )
   }
 
-  return <div className={styles.container}>{content()}</div>
+  return (
+    <>
+      <Head>
+        <title>{title ?? "unknown"} - Sakho&apos;s Portfolios -</title>
+      </Head>
+
+      <motion.div
+        initial={{ opacity: 0 }} // 初期状態
+        animate={{ opacity: 1 }} // マウント時
+        exit={{ opacity: 0 }} // アンマウント時
+        transition={{
+          duration: 0.5,
+        }}
+      >
+        <div className={styles.container}>{content()}</div>
+      </motion.div>
+    </>
+  )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

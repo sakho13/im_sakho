@@ -10,20 +10,28 @@
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json,css}'"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-brands-svg-icons": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mui/material": "^5.11.3",
     "@nextui-org/react": "^1.0.0-beta.10",
+    "@notionhq/client": "^2.2.3",
+    "@types/cheerio": "^0.22.31",
     "@types/katex": "^0.16.0",
     "axios": "^0.27.2",
+    "cheerio": "^1.0.0-rc.12",
     "dayjs": "^1.11.7",
+    "framer-motion": "^8.4.6",
     "katex": "^0.16.4",
     "microcms-js-sdk": "^2.3.2",
-    "next": "12.2.5",
+    "next": "^13.1.2",
     "next-themes": "^0.2.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zod": "^3.20.2"
   },
   "devDependencies": {
     "@types/gtag.js": "^0.0.12",
@@ -31,10 +39,10 @@
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
     "eslint": "8.23.0",
-    "eslint-config-next": "12.2.5",
+    "eslint-config-next": "^13.1.2",
     "eslint-config-prettier": "^8.5.0",
     "prettier": "^2.7.1",
     "sass": "^1.54.7",
-    "typescript": "4.8.2"
+    "typescript": "4.9.5"
   }
 }

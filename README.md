@@ -4,8 +4,10 @@
 
 * Next.js
   * TypeScript
+  * zod
 * Vercel
-* Notion
+* microCMS
+* Framer Motion
 
 ## Deployment
 

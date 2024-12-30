@@ -3,16 +3,101 @@ import PostList from "@/components/post_list"
 import { PostController } from "@/lib/post/PostController"
 import styles from "@/styles/post_index.module.scss"
 import { BlogInfo } from "@/types/blog"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
+import AboutMe from "@/components/about_me"
+import { Grid } from "@mui/material"
+import Head from "next/head"
+import { motion } from "framer-motion"
 
 export type PostListOnlyProps = {
   blogs: BlogInfo[]
 }
 
 const Post: NextPage<PostListOnlyProps> = ({ blogs }: PostListOnlyProps) => {
+  const router = useRouter()
+
+  const [categoryId, setCategoryId] = useState("")
+  const [subCategoryId, setSubCategoryId] = useState("")
+
+  useEffect(() => {
+    setCategoryId("")
+    setSubCategoryId("")
+
+    if (
+      router.query.category !== undefined &&
+      !Array.isArray(router.query.category)
+    ) {
+      setCategoryId(router.query.category)
+    }
+    if (
+      router.query.sub_category !== undefined &&
+      !Array.isArray(router.query.sub_category)
+    ) {
+      setSubCategoryId(router.query.sub_category)
+    }
+  }, [router.query])
+
   return (
-    <div className={styles.container}>
-      <PostList blogs={blogs} />
-    </div>
+    <>
+      <Head>
+        <title>Posts - Sakho&apos;s Portfolios -</title>
+      </Head>
+
+      <motion.div
+        initial={{ opacity: 0 }} // 初期状態
+        animate={{ opacity: 1 }} // マウント時
+        exit={{ opacity: 0 }} // アンマウント時
+        transition={{
+          duration: 0.5,
+        }}
+      >
+        <Grid
+          container
+          className={styles.container}
+          sx={{
+            flexDirection: { md: "row", xs: "column-reverse" },
+          }}
+        >
+          <Grid
+            item
+            xs={12}
+            md={3}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: { xs: "30px" },
+            }}
+          >
+            <AboutMe
+              noTitle={true}
+              noIcon={true}
+              noLink={true}
+              noText={true}
+              noMenu={false}
+            />
+          </Grid>
+          <Grid item xs={12} md={9}>
+            <PostList
+              blogs={blogs.filter((blog) => {
+                if (categoryId === "all" || categoryId === "") {
+                  return true
+                } else {
+                  const categories = blog.category.map((c) => c.id)
+                  return (
+                    categories.includes(categoryId) &&
+                    (subCategoryId === ""
+                      ? true
+                      : categories.includes(subCategoryId))
+                  )
+                }
+              })}
+            />
+          </Grid>
+        </Grid>
+      </motion.div>
+    </>
   )
 }
 
