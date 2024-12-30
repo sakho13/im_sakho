@@ -19,16 +19,3 @@ export class DateUtility {
     return dayjs.utc(raw).tz("Asia/Tokyo").format("YYYY年MM月DD日")
   }
 }
-
-/**
- *  ISO 8601形式の日付の変換
- * @param raw ISO 8601形式の日付
- * @returns Asia/Tokyoでの年月日
- */
-export function convDate(raw: string | undefined): string {
-  if (raw === undefined) {
-    return "9999年12年31日"
-  }
-
-  return dayjs.utc(raw).tz("Asia/Tokyo").format("YYYY年MM月DD日")
-}

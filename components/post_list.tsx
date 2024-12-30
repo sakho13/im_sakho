@@ -2,7 +2,7 @@ import type { NextPage } from "next"
 import styles from "../styles/post_list.module.scss"
 import { useRouter } from "next/router"
 import { BlogInfo } from "@/types/blog"
-import { convDate } from "@/lib/date_utility/date_utility"
+import { DateUtility } from "@/lib/utilities/DateUtility"
 import CategoryBar from "./category_bar"
 
 export type PostListProps = {
@@ -49,10 +49,16 @@ const PostList: NextPage<PostListProps> = ({ blogs = [] }: PostListProps) => {
                 {blog.title}
               </p>
               <p className={styles.post_cell_date}>
-                <span>作成日: {convDate(blog.createdAt)}</span>
+                <span>
+                  作成日:{" "}
+                  {DateUtility.convertISO8601ToFormattedDate(blog.createdAt)}
+                </span>
               </p>
               <p className={styles.post_cell_date}>
-                <span>最終更新日: {convDate(blog.revisedAt)}</span>
+                <span>
+                  最終更新日:{" "}
+                  {DateUtility.convertISO8601ToFormattedDate(blog.revisedAt)}
+                </span>
               </p>
               <div className={styles.post_cell_genres}>
                 <CategoryBar categories={blog.category} />

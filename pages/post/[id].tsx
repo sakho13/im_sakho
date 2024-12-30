@@ -1,5 +1,5 @@
 import CategoryBar from "@/components/category_bar"
-import { convDate } from "@/lib/date_utility/date_utility"
+import { DateUtility } from "@/lib/utilities/DateUtility"
 import { CategoryInfo } from "@/types/category"
 import { motion } from "framer-motion"
 import type { NextPage, GetStaticPaths, GetStaticProps } from "next"
@@ -132,8 +132,10 @@ export const getStaticProps: GetStaticProps<PostDetailType> = async (ctx) => {
         html: blog.content,
         title: blog.title,
         categories: blog.category,
-        createdAt: convDate(blog.createdAt),
-        lastUpdatedAt: convDate(blog.revisedAt),
+        createdAt: DateUtility.convertISO8601ToFormattedDate(blog.createdAt),
+        lastUpdatedAt: DateUtility.convertISO8601ToFormattedDate(
+          blog.revisedAt,
+        ),
       },
     }
   } catch (err) {
